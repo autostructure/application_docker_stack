@@ -1,0 +1,16 @@
+<%- | String  $role,
+      String  $application = undef,
+      String  $apptier     = undef
+| -%>
+#! /bin/bash
+
+mkdir -p /etc/puppetlabs/puppet
+echo "---"                                    > /etc/puppetlabs/puppet/csr_attributes.yaml
+echo "extension_requests:"                    >> /etc/puppetlabs/puppet/csr_attributes.yaml
+echo "  pp_role: <%= $role %>"                >> /etc/puppetlabs/puppet/csr_attributes.yaml
+<% if $application { -%>
+echo "    pp_application=<%= $application %>" >> /etc/puppetlabs/puppet/csr_attributes.yaml
+<% } -%>
+<% if $apptier { -%>
+echo "    pp_apptier=<%= $apptier %>"         >> /etc/puppetlabs/puppet/csr_attributes.yaml
+<% } -%>
